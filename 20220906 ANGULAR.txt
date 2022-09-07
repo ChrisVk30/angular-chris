@@ -1,0 +1,79 @@
+interpolation -> properties vanuit een klasse in html zetten {{ variabele }}
+property binden? -> zet er [ ] omheen (bijv. <img [src] = variabele />
+event binding -> bijv. (click) = "doeIets()" die in je .ts file gedefinieerd staat
+
+@Component -> decorator 
+
+Structural directive:
+bijv 
+<tr 
+*ngFor="let product of products"
+[class.duur]="product.price > 15"
+(click)="hoogOp(product)"
+>
+  <td {{ product.id }} </td>
+  <td {{ product.price }} </td>
+</tr>
+
+template driven forms -> meeste code in template
+- data model (zelf gemaakt & zichtbaar)
+- form model (onzichtbaar)
+
+Als je ngModel gebruikt in een form, weet Angular standaard niet waarheen hij moet linken
+|--> ngModel verwijst naar het data-model, 'name' property definieert property in form
+
+model driven forms -> meeste code in model
+
+implements -> interface in je klasse implementeren, waardoor je klasse die moet implementeren
+rest operator: function doeIets(...rest), waarbij het gaat werken met een array
+spread operator: {...rest} -> eerlijke kopie maken. Maar kan ook {...vlag, k2: 'geel'} <-- k2 proberty van vlag object wordt geel
+function vlag(overrides: any) {
+	return {
+		k1: 'wit'
+		k2: 'oranje',
+		...overrides
+		}
+}
+
+object aanpassen? Gebruik:
+let user = { id: 10, name: 'Peter' }
+user = { ...user, name: 'Henk' }
+
+union types: 
+type value = 'iets' | 'anders'
+
+Partial<T>: je hoeft niet per se alle parameters van <T> te gebruiken, bijv. een interface <Media>
+
+Pipes: iets doen met een waarde terwijl je aan het interpoleren bent
+bijv. product.price | currency: 'EUR' OF number: '1:0-2' <-- 2 decimalen achter de komma
+
+@Pipe({name : 'camelcase' })
+class CamelCasePipe implements PipeTransform {
+
+}
+
+uiteindelijk toevoegen in je app.module.ts -> @NgModule
+declarations -> components, directives, pipes
+imports -> modules waarvan je de components, directives & pipes hier wil gebruiken
+providers -> services, global settings
+
+describe(string, functie) = testsuite
+it(string, functie) = individual test -> itshouldblabla
+expect(actualValue).toBe(expectedValue) <== toBe is voorbeeld van matcher
+
+describe('mijn test', () => {
+	it('should work', () => {
+		expect(..).toBe(..);
+	}
+}
+)
+
+fit -> focus op deze test
+xit -> negeer deze test
+
+TestInitialize in Jasmine:
+let sut: iets;
+
+beforeEach(() => {
+	sut = new Instance();
+});

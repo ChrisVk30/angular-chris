@@ -1,0 +1,41 @@
+Verschil toBe, toEqual
+toBe staat gelijk aan ===
+toEqual doet een deep comparison en checkt of hetzelfde type en waarde is
+
+Angular TestBed, om geïntegreerde tests te kunnen schrijven in een component
+TestBed is soort van fake @NgModule
+
+
+let fixture: ComponentFixture<HostComponent>	<-- fixture is een soort van wrapper om het host component heen
+fixture = TestBed.createComponent(HostComponent);
+
+let debugElement: DebugElement;
+let component : HostComponent;
+debugElement = fixture.debugElement		<-- wrapper om het html element heen, wat in je template staat van je gedefinieerde component
+component = fixture.componentInstance; 		<-- instance van de klasse
+
+fixture.detectChanges();			<-- nodig om change detection manueel in je test aan te zwengelen
+
+Reactief programmeren:
+In Angular worden bijna alleen maar observables gebruikt i.p.v. promises
+Promises:
+- Eager
+- Altijd async
+- Resolve, reject
+
+Observables:
+- werkt niet met resolve, reject, maar met een algemene subscriber en bijv. .next() i.p.v. resolve() / reject()
+- gaat pas lopen zodra er een subscriber is : lazy
+- geeft alle .next() waardes terug (stream), terwijl een promise enkel de eerste waarde vanuit een reject / resolve teruggeeft
+- elke consumer krijgt z'n eigen observable + waardes
+
+Model driven form:
+- FormGroup -> overzicht van verschillende formcontrols: definieer in html als [formGroup]="naam"
+- FormControl -> mapt 1 op 1 met een input veld: definieer in html als formControlName = "name"
+|--> FormControl('', Validators.required)
+- ReactiveFormsModule is nodig in imports in @ngModule
+
+Lifecycle hooks:
+Check(ed) hooks -> zodra changeDetection afgaat kun je code schrijven die uitgevoerd wordt
+ngOnInit: zodra een component wordt geladen: alles wordt geïnitialiseerd
+ngOnDestroy: zodra een component wordt verwijderd

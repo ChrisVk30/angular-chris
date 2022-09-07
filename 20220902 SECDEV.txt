@@ -1,0 +1,129 @@
+OWASP -> Open Web Architecture Security Project
+- Website met o.a. best practises & cheat sheets.
+- ZAP tool 
+- Top 10 Vulnerabilities
+
+Waarom zijn er security risico's
+- Bedrijven kunnen niet alle risico's inschatten
+- Mensen zijn slecht in het inschatten van risico's
+
+CWE -> Common Weaknesses Enumeration
+CVE -> Common Vulnerabilities Enumeration
+checken of er gevaren zijn met een bepaald component 
+
+Mitigation -> maatregel om iets zoveel mogelijk te beperken
+Exploit -> Inbreken
+
+STRIDE:
+- Spoofing
+Je voordoen als iemand of iets anders
+
+- Tampering
+Mogelijkheid om dingen ongeoorloofd aan te passen. 
+In transit (op lijntje), bijv. netwerkpakketje afluisteren
+In rest (ergens opgeslagen iets / lokaal)
+
+- Repudiation
+Je kunt iets ontkennen.
+Iemand moet dit niet kunnen doen -> Non-repudiation
+
+- Information disclosure
+Gegevens komen op straat, bijv. broncode naar buiten.
+
+- Denial of service
+Ervoor zorgen dat er intussen niks anders kan gebeuren, bijv. door een hele zware query te laten draaien of door iemand z'n account te locken door verkeerde gegevens te gebruiken.
+
+- Elevation of privilege
+Jezelf meer rechten geven dan je eigenlijk mag hebben
+
+Trust boundary: een plek waar een informatiestroom plaats vindt en die mogelijk kwetsbaar is voor een aanval (attack surface)
+
+Man in the middle proxy: aan de kant van de browser, tussen browser en (web) server. Kan je opnieuw POST doen met andere informatie om de client side validatie te omzeilen
+Standaard in Firefox (resend) : intercepten
+Burp Suite : intercepten + aanvallen uitvoeren
+OWASP Zap : intercepten + aanvallen uitvoeren
+
+Referrer: om aan te geven welke websites naar een website linken, zodat gevoelige informatie in een GET ook via de Referrer doorgestuurd kan worden
+In een a href toevoegen van 'rel="noreferrer"', zorgt ervoor dat de referrer niet meegestuurd wordt met de GET
+|--> standaard wordt de referrer echter tegenwoordig niet meer toegevoegd
+
+Standaard HTTP Requests:
+HEAD -> geeft alleen de headers terug
+OPTIONS -> server geeft terug welke methodes hij ondersteund (bijv. GET)
+TRACE -> je krijgt de vraag terug als een echo, voor debugging
+CONNECT, GET, PUT, DELETE, POST
+
+Custom Requests:
+Zie slides
+
+Met dubbele parameter namen gaan verschillende omgevingen anders om, wat hackers dan weer kunnen gebruiken
+
+HTTP Responses:
+2xx -> OK
+3xx -> Redirect
+4xx -> Client error
+5xx -> Server error
+
+Response opzet:
+1. Status regel
+2. Headers
+3. Body
+
+Headers mogen niet gewijzigd worden, zodat een hacker niet een gebruiker naar een andere locatie kan sturen bijvoorbeeld
+
+Content-disposition -> Hoe moet de gebruiker iets opent (bijv. laden in browser of opslaan in .txt bestand)
+|--> meest veilig is om het te laten downloaden / ander proces. Zo kunnen geen cookies gestolen worden.
+
+Same Origin Policy (SOP) & Cross Origin Resource Sharing (CORS):
+Browser implementeert SOP, web server implementeert CORS
+
+Same-Origin requests
+Eerste GET wordt de eerste origin bepaalt (bijv. belastingdienst.nl)
+Alles wat daarna opgehaald wordt mag, omdat het van dezelfde origin komt
+
+Cross-Origin requests
+Je mag dingen halen van verschillende domeinen ophalen, zoals bijv. een layout.css of image.png
+Standaard mag je echter geen data ophalen (via AJAX) van een ander domein (ook geen image in canvas of webfont)
+
+Regels:
+protocol + hostname + port moeten kloppen voor Same-Origin
+
+POST is echter altijd toegestaan, zonder direct een CORS in te stellen
+++ Cookies kijken alleen naar middenstuk (dus hostname)
+Als je een domein niet meegeeft dan moet je toch voldoen aan de hele regel van protocol, hostname, port
+met een path geef je verdere specificatie aan je domein aan (bijv. domein.com/tools/)
+Expire date van cookie in toekomst -> persisted cookie, dus opgeslagen in browser
+HttpOnly: true -> JavaScript kan het niet uitlezen.
+Secure: true -> enkel verstuurd over HTTPS.
+
+CORS:
+Geef je aan waarvandaan je wel resources kunt delen; gaatje in de standaard SOP, zodat die wel data met GETten van je site
+Veiligheid wordt in zekere mate wat losgelaten
+Zie je terug in response headers  -> access-control-allow-origin
+
+RFC (Request for Comments):
+Veranderen op web gebied (bijv. X Requested With)
+
+Password salting -> technique to make offline cracking more difficult. Een gevonden hash kun je niet hergebruiken om dezelfde waarde ergens anders terug te kunnen vinden.
+Kolommen met username, salted & hashed password, used salt
+
+Altijd als je opnieuw inlogt moet een nieuw session id gecreeërd worden, niet eentje hergebruiken
+
+Cross Site Request Forgery (CSRF):
+Een POST request wordt gestuurd door een gebruiker, terwijl het door een hacker is opgezet
+Belangrijkste mitigation: CSRF token (Nonce (Number Used Once))
+|--> wordt gemaakt bij de 1e GET en teruggestuurd samen met sessionID (cookie)
+Zodra de token weer wordt gecontroleerd en de transactie plaatsvindt, dan wordt de token vernieuwd bij de ontvanger
+|--> zodra er dan een hacker tussen komt, wordt de token niet meegestuurd en gaat de transactie dus fout
+
+Andere oplossing -> Same site strict, waardoor het alleen vanuit een bepaalde origin wordt verstuurd OF X-Requested-With (maar alleen bij AJAX)
+
+
+Server + X-Powered-By niet tonen in je Headers 
+
+SQL injection:
+1. Parameterized Query (Prepared Statement) gebruiken  als mitigation: op de plek van de variabelen een '?' gebruiken en achteraan de variabele de declaratie doen: 
+'SELECT * FROM Table WHERE name = ?', [value1]
+2. ORM als mitigation (bijv. EFCore), maar let op bij Raw SQL queries
+3. Stored Procedure ( let op bij dynamic SQL)
+4. Sanitizen
