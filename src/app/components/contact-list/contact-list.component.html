@@ -1,0 +1,22 @@
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>E-mail address</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+      *ngFor="let contact of contacts">
+        <td>{{contact | contactName }}</td>
+        <td>{{contact.email}}</td>
+        <!-- <td>{{ nu | date: 'dd MMMM yyyy' | uppercase }}</td> -->
+        <td>
+          <button (click)="editContact(contact)" id="edit-btn">Edit</button>
+          <button (click)="deleteContact(contact)" id="delete-btn">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>

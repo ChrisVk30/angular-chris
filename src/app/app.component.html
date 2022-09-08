@@ -23,8 +23,21 @@ Price : {{ price }}
   <input type="text" placeholder="name" [(ngModel)] = "someObject.name" name="name"><br>
   <button>Magic</button>
 </form> --> 
+<div class="container">
+  <h1 class="display-1">Date picker</h1>
+  <p class="lead">Pick your date like a pro</p>
+  <h3>Contacts</h3>
+
+  <app-contact-list
+  ></app-contact-list>
+
+</div>
+
+<app-contact-form
+></app-contact-form>
 
 <button (click)="toonLifecycle =! toonLifecycle">Toggle lifecycle component</button>
+
 <app-lifecycle 
   [message]="message"
   *ngIf="toonLifecycle"
@@ -32,11 +45,11 @@ Price : {{ price }}
   (spanEvent)="onHoveredSpanInChild($event)"
 ></app-lifecycle>
 
-
+<!-- <div id="#showchildinfo"> {{ value }}</div> -->
 
 <hr>
 
-<div class="container">
+<!-- <div class="container">
   <h1 class="display-1">Date picker</h1>
   <p class="lead">Pick your date like a pro</p>
   <h3>Contacts</h3>
@@ -53,7 +66,7 @@ Price : {{ price }}
       *ngFor="let contact of contacts">
         <td>{{contact | contactName }}</td>
         <td>{{contact.email}}</td>
-        <!-- <td>{{ nu | date: 'dd MMMM yyyy' | uppercase }}</td> -->
+        <td>{{ nu | date: 'dd MMMM yyyy' | uppercase }}</td>
         <td>
           <button (click)="editContact(contact)" id="edit-btn">Edit</button>
           <button (click)="deleteContact(contact)" id="delete-btn">Delete</button>
@@ -61,9 +74,9 @@ Price : {{ price }}
       </tr>
     </tbody>
   </table>
-</div>  
+</div>   -->
 
-<form 
+<!-- <form 
   (ngSubmit)="addContact()"
   [formGroup]="addContactForm"
 >
@@ -73,4 +86,4 @@ Price : {{ price }}
   <div *ngIf="((email.touched || email.dirty) && email.hasError('required'))">Please enter a mail address</div>
   <div *ngIf="((email.touched || email.dirty) && email.hasError('pattern'))">Please follow the following pattern: mailadres@provider.nl</div>
   <button id="add-btn" [disabled]="addContactForm.invalid">Add</button>
-</form>
+</form> -->

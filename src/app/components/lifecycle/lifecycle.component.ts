@@ -8,12 +8,14 @@ import { Contact } from 'src/app/models/contact';
 })
 export class LifecycleComponent implements core.OnInit, core.OnDestroy {
   onMouseOver() {
-    this.spanEvent.emit('Muis over de span gegaan!')
+    this.spanEvent.emit(this.value)
   }
   
   onClick() {
     this.messageEvent.emit('Hallo vanuit child!');
   }
+
+  value = "Hallo vanuit hover";
 
   intervalId = 0;
   

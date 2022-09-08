@@ -1,0 +1,11 @@
+<form 
+  (ngSubmit)="addContact()"
+  [formGroup]="addContactForm"
+>
+  <input type="text" placeholder="first name" formControlName="firstName"><br>
+  <input type="text" placeholder="last name" formControlName="surname"><br>
+  <input type="email" placeholder="email" formControlName="email"><br>
+  <div *ngIf="((email.touched || email.dirty) && email.hasError('required'))">Please enter a mail address</div>
+  <div *ngIf="((email.touched || email.dirty) && email.hasError('pattern'))">Please follow the following pattern: mailadres@provider.nl</div>
+  <button id="add-btn" [disabled]="addContactForm.invalid">Add</button>
+</form>
