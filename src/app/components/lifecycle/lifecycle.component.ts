@@ -1,20 +1,30 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import * as core from '@angular/core';
 import { Contact } from 'src/app/models/contact';
 
-@Component({
+@core.Component({
   selector: 'app-lifecycle',
   templateUrl: './lifecycle.component.html',
   styleUrls: ['./lifecycle.component.scss']
 })
-export class LifecycleComponent implements OnInit, OnDestroy {
+export class LifecycleComponent implements core.OnInit, core.OnDestroy {
+  onMouseOver() {
+    this.spanEvent.emit('Muis over de span gegaan!')
+  }
+  
+  onClick() {
+    this.messageEvent.emit('Hallo vanuit child!');
+  }
 
   intervalId = 0;
   
-  @Input()
+  @core.Input()
   message = '';
 
-  @Input()
-  contacts : Contact[] = [];
+  @core.Output()
+  messageEvent = new core.EventEmitter<string>();
+
+  @core.Output()
+  spanEvent = new core.EventEmitter<string>();
 
   constructor() { 
     console.log('Hi constructor')
@@ -29,6 +39,10 @@ export class LifecycleComponent implements OnInit, OnDestroy {
     // this.intervalId = window.setInterval(() => {
     //   console.log('Hi from interval');
     // }, 1000)
+  }
+
+  ngOnChanges(changes: core.SimpleChanges) : void {
+    console.log('%c On Changes','background: green', changes);
   }
 
 }

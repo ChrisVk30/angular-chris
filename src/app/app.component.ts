@@ -9,6 +9,13 @@ import { Contact, createContact } from './models/contact';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  onHoveredSpanInChild(value : string) {
+    console.log('Message: ', value);
+  }
+
+  onButtonClickInChild(value : string) {
+    console.log('Message: ', value);
+  }
 
   // someObject : any = {};
 
@@ -44,6 +51,7 @@ export class AppComponent {
   // lowerPrice() {
   //   this.price -= 5;
   // }
+
   message = 'hallo vanuit parent'
   toonLifecycle = true;
   get email() { return this.addContactForm.controls.email }
@@ -76,10 +84,7 @@ export class AppComponent {
   
   // newContact: Contact = createContact();
 
-  name: string;
-  constructor() {
-    this.name = 'world!';
-  }
+  name: string = 'World!';
 
   editContact(contact: Contact) {
     console.log('contact edited');

@@ -26,15 +26,15 @@ Price : {{ price }}
 
 <button (click)="toonLifecycle =! toonLifecycle">Toggle lifecycle component</button>
 <app-lifecycle 
-  [contacts]="contacts"
   [message]="message"
   *ngIf="toonLifecycle"
+  (messageEvent)="onButtonClickInChild($event)"
+  (spanEvent)="onHoveredSpanInChild($event)"
 ></app-lifecycle>
 
 
-<hr>
 
-<div class="jumbotron">Hello {{name}}</div>
+<hr>
 
 <div class="container">
   <h1 class="display-1">Date picker</h1>
